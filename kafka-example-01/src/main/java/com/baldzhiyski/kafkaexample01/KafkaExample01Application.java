@@ -15,9 +15,13 @@ public class KafkaExample01Application {
 
 
 	@Bean
-	CommandLineRunner commandLineRunner(KafkaTemplate<String,String> kafkaTemplate){
-		return args ->{
-			kafkaTemplate.send("baldzhiyski", "hello kafka");
+	CommandLineRunner commandLineRunner(KafkaTemplate<String, String> kafkaTemplate) {
+		return args -> {
+			for (int i = 0; i < 10; i++) { // Send fewer messages for testing
+				kafkaTemplate.send("baldzhiyski", "Hello Kafka " + i);
+				Thread.sleep(500); // Slow down message sending
+			}
 		};
 	}
+
 }

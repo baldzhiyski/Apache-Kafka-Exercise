@@ -15,9 +15,7 @@ public class KafkaConfig {
 
     // Method to define and create a new Kafka topic named "baldzhiyski"
     @Bean
-    public NewTopic baldzhiyskiTopic() {
-        // Use TopicBuilder to create a topic with the given name
-        return TopicBuilder.name("baldzhiyski")
-                .build(); // Build and return the topic definition
+    public NewTopic topic() {
+        return new NewTopic("baldzhiyski", 1, (short) 1); // partitions=1, replicationFactor=1
     }
 }
