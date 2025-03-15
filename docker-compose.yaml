@@ -18,20 +18,20 @@ services:
     container_name: kafka
     image: confluentinc/cp-kafka:latest
     ports:
-      - "9093:9093"
+      - "9093:9093"  # Expose the external port
     expose:
-      - "9093"
+      - "9092"  # Expose the internal port for Kafka brokers
     environment:
-      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9093  # This line is required
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9093  # Use kafka as the hostname
       - KAFKA_LISTENER_SECURITY_PROTOCOL=PLAINTEXT
-      - KAFKA_LISTENER_PORT=9093
+      - KAFKA_LISTENER_PORT=9092
       - KAFKA_LISTENER_NAME=PLAINTEXT
       - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
       - KAFKA_LISTENER_INTER_BROKER_SECURITY_PROTOCOL=PLAINTEXT
-      - KAFKA_LISTENER_NAME_INNER=INTERNAL
-      - KAFKA_LISTENER_PORT_INNER=9092
       - KAFKA_LISTENER_INTERNAL=INTERNAL
       - KAFKA_LISTENER_SECURITY_PROTOCOL_INTERNAL=PLAINTEXT
-      - KAFKA_LISTENER_NAME=PLAINTEXT
+      - KAFKA_LISTENER_NAME_INNER=INTERNAL
+      - KAFKA_LISTENER_PORT_INNER=9092
     depends_on:
       - zookeeper
+
