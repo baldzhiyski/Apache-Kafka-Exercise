@@ -1,0 +1,37 @@
+version: '2'
+
+name: my_kafka_project
+
+services:
+
+  zookeeper:
+    container_name: zookeeper
+    image: wurstmeister/zookeeper:latest
+    ports:
+      - "2181:2181"
+    environment:
+      - ZOOKEEPER_CLIENT_PORT=2181
+      - ZOOKEEPER_TICK_TIME=2000
+      - ZOOKEEPER_SYNC_LIMIT=2
+
+  kafka:
+    container_name: kafka
+    image: confluentinc/cp-kafka:latest
+    ports:
+      - "9093:9093"
+    expose:
+      - "9093"
+    environment:
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9093  # This line is required
+      - KAFKA_LISTENER_SECURITY_PROTOCOL=PLAINTEXT
+      - KAFKA_LISTENER_PORT=9093
+      - KAFKA_LISTENER_NAME=PLAINTEXT
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_LISTENER_INTER_BROKER_SECURITY_PROTOCOL=PLAINTEXT
+      - KAFKA_LISTENER_NAME_INNER=INTERNAL
+      - KAFKA_LISTENER_PORT_INNER=9092
+      - KAFKA_LISTENER_INTERNAL=INTERNAL
+      - KAFKA_LISTENER_SECURITY_PROTOCOL_INTERNAL=PLAINTEXT
+      - KAFKA_LISTENER_NAME=PLAINTEXT
+    depends_on:
+      - zookeeper
