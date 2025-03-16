@@ -13,4 +13,10 @@ public class KafkaTopicConfig {
         return TopicBuilder.name("javaguides")
                 .build();
     }
+
+    @Bean
+    public NewTopic javaGuidesJSONTopic(){
+        return TopicBuilder.name("javaguides_json")
+                .build();
+    }
 }
